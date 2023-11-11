@@ -7,7 +7,7 @@ class RoomSerializer(serializers.ModelSerializer):
     photos = RoomPhotoSerializer(many=True, read_only=True, source="room_photo")
     class Meta:
         model = Room
-        fields = ("id", "name", "capacity", "start_cost", "photos")
+        fields = ("id", "name", "capacity", "cost", "photos")
 
 
 class RoomDetailsSerializer(serializers.ModelSerializer):

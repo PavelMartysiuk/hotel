@@ -8,8 +8,7 @@ from core.swagger.view import schema_view
 from hotel_info.api.v1.views.hotel import HotelView
 from hotel_info.api.v1.views.room_type import RoomTypeView
 from hotel_info.api.v1.views.room import RoomView, RoomDetailsView
-from hotel_info.api.v1.views.booking import BookingView
-
+from hotel_info.api.v1.views.booking import BookingView, BookingListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,7 +19,7 @@ urlpatterns = [
     path('api/v1/room/', RoomView.as_view()),
     path('api/v1/room/<int:pk>/', RoomDetailsView.as_view()),
     path('api/v1/booking/', BookingView.as_view()),
-
+    path('api/v1/booking/list/', BookingListView.as_view())
 
 ]
 

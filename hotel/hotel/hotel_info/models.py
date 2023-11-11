@@ -52,7 +52,7 @@ class RoomType(models.Model):
 class Room(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    start_cost = models.FloatField()
+    cost = models.FloatField()
     size = models.FloatField()
     capacity = models.IntegerField()
     room_type = models.ForeignKey('RoomType', on_delete=models.CASCADE, related_name='rooms')
