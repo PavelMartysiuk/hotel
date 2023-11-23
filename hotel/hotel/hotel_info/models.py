@@ -75,5 +75,6 @@ class RoomPhoto(models.Model):
 
 class Booking(models.Model):
     room = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='booking')
-    date = models.DateField(null=False, blank=False)
+    start_date = models.DateField(null=False, blank=False)
     guest = models.EmailField(max_length=255)
+    end_date = models.DateField(null=True, blank=False)

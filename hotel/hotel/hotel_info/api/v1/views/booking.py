@@ -7,7 +7,7 @@ from hotel_info.api.v1.serializers.booking import BookingSerializer
 from hotel_info.models import Booking
 from django_filters.rest_framework import DjangoFilterBackend
 from hotel_info.api.v1.filters.booking import BookingFilter
-
+import datetime
 
 class BookingView(
     generics.CreateAPIView,
@@ -17,9 +17,14 @@ class BookingView(
     serializer_class = BookingSerializer
 
     def create(self, request, *args, **kwargs):
-        date = request.data.get("date")
-        if Booking.objects.filter(date=date, room=request.data.get("room")).first():
-            return Response({"Booking already exists for this day "}, status=status.HTTP_201_CREATED)
+        start_date = request.data.get("start_date")
+        end_date = request.data.get("end_date")
+        if start_date > end_date:
+            return Response({"Start date < end date"}, status=status.HTTP_400_BAD_REQUEST)
+        if datetime.datetime.strptime(start_date, "%Y-%m-%d").date()    < datetime.datetime.now().date():
+            return Response({"Date can't be in past"}, status=status.HTTP_400_BAD_REQUEST)
+        if Booking.objects.filter(start_date__range=(start_date, end_date), end_date__range=(start_date, end_date), room=request.data.get("room")).first():
+            return Response({"Booking already exists for this day "}, status=status.HTTP_400_BAD_REQUEST)
         return super().create(request, *args, **kwargs)
 
 
